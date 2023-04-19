@@ -8,15 +8,16 @@ transactionController.get("/", (req, res) => {
     res.send(transactionArray);    
 });
 
-transactionController.get('/:index', (req, res) => {
-    const { index } = req.params
-    if(transactionArray[index]) {
-    res.send(transactionArray[index]);
-  } else {
-    res.redirect("/404")
-  } 
-  })
-
+  transactionController.get("/:id", (req,res) => {
+    const { id } = req.params;
+    console.log(id)
+     if (transactionArray.find(element=> element.transactionId == id )) {
+        console.log("ppp")
+        res.send(transactionArray.find( e=> e.transactionId == id))
+     } else {
+        res.redirect("/400")
+     }
+})
 
   transactionController.post('/', (req, res) => {
     const transaction = {
@@ -41,7 +42,7 @@ transactionController.put('/:index', (req, res) => {
       res.redirect("/404")
     }
   })
-transactionController.delete("/:id", (req, res) => {
+transactionController.delete("/:index", (req, res) => {
     const {index} = req.params;
     if(transactionArray[index]){
         transactionArray.splice(index, 1);
